@@ -29,7 +29,9 @@ const HomePage = () => {
   }, []);
 
   if (error) {
-    return <h1>error</h1>;
+    return (
+      <h1 className="text-center sm:text-sm md:text-md lg:text-lg">{error}</h1>
+    );
   }
 
   return (
