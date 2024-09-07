@@ -1,5 +1,5 @@
+import { useFetch } from '@/src/hooks/useFetch';
 import { Select } from '@components/Select';
-import { getServerSideProps } from 'next/dist/build/templates/pages';
 import { useEffect, useState } from 'react';
 
 const years = [
@@ -19,11 +19,12 @@ const HomePage = () => {
   const [year, setYear] = useState<number>();
   const [make, setMake] = useState<Record<string, any>>();
 
+  const { data, loading, error, fetchData } = useFetch(
+    '/GetMakesForVehicleType/car'
+  );
+
   useEffect(() => {
-    fetch(
-      (process.env.NEXT_PUBLIC_API as string) +
-        '/GetMakesForVehicleType/car?format=json'
-    );
+    fetchData();
   }, []);
 
   return (
@@ -32,7 +33,7 @@ const HomePage = () => {
 
       <Select
         label="Make"
-        options={years}
+        options={data?.Results}
         displayNameField={'MakeName'}
         onChange={setMake}
         selected={make?.MakeName}
@@ -40,5 +41,21 @@ const HomePage = () => {
     </div>
   );
 };
+
+// export async function getServerSideProps() {
+//   const { data, loading, error, fetchData } = await useFetch(
+//     '/GetMakesForVehicleType/car'
+//   );
+
+//   fetchData();
+
+//   return {
+//     props: {
+//       data,
+//       loading,
+//       error,
+//     },
+//   };
+// }
 
 export default HomePage;

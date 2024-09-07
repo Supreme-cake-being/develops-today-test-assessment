@@ -31,9 +31,9 @@ module.exports = {
         'light-gray': '#6b7280',
       },
       padding: {
-        'select-sm': '8px 16px',
-        'select-md': '12px 24px',
-        'select-lg': '16px 32px',
+        sm: '8px 16px',
+        md: '12px 24px',
+        lg: '16px 32px',
       },
     },
   },

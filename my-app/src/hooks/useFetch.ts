@@ -1,26 +1,30 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-axios.defaults.baseURL = process.env.NEXT_PUBLIC_API;
-
-export const useFetch = async (url: string) => {
-  const [data, setData] = useState(null);
+export const useFetch = (url: string) => {
+  const [data, setData] = useState<Record<string, any>>();
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string>();
+
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        process.env.NEXT_PUBLIC_API + `/${url}?format=json`
+      );
+      console.log(response);
+      setData(response.data);
+    } catch (error) {
+      const typedError = error as Error;
+      setError(typedError.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`/${url}?format=json`);
-        setLoading(false);
-        setData(response.data);
-      } catch (error) {
-        const typedError = error as Error;
-        setLoading(false);
-        setError(typedError.message);
-      }
-    };
+    fetchData();
   }, [url]);
 
-  return { data, loading, error };
+  return { data, loading, error, fetchData };
 };
