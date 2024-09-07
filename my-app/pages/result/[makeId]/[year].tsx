@@ -10,9 +10,7 @@ const ResultPage = () => {
     query: { makeId, year },
   } = useRouter();
 
-  console.log(makeId, year);
-
-  const { data, loading, error, fetchData } = useFetch(
+  const { data, fetchData } = useFetch(
     `/GetModelsForMakeIdYear/makeId/${makeId}/modelyear/${year}`
   );
 
