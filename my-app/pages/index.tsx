@@ -1,5 +1,5 @@
 import { useFetch } from '@/src/hooks/useFetch';
-import { Select } from '@components/Select';
+import Select from '@components/Select';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
@@ -28,9 +28,9 @@ const HomePage = () => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    console.log(make);
-  }, [make]);
+  if (error) {
+    return <h1>error</h1>;
+  }
 
   return (
     <>
@@ -48,13 +48,16 @@ const HomePage = () => {
           displayNameField={'MakeName'}
           onChange={setMake}
           selected={make}
+          loading={loading}
         />
       </div>
 
-      <Link
-        href={`result/${make?.MakeId}/${year?.id}`}
-        className="sm:p-sm md:p-md lg:p-lg sm:text-sm md:text-md lg:text-lg bg-blue text-white border rounded-2xl border-transparent">
-        Next
+      <Link href={`result/${make?.MakeId}/${year?.id}`}>
+        <button
+          className="sm:p-sm md:p-md lg:p-lg sm:text-sm md:text-md lg:text-lg bg-blue text-white border rounded-2xl border-transparent disabled:bg-gray"
+          disabled={!make || !year}>
+          Next
+        </button>
       </Link>
     </>
   );

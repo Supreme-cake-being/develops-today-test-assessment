@@ -6,14 +6,16 @@ interface IProps {
   label: string;
   onChange: Dispatch<SetStateAction<any>>;
   selected?: Record<string, any>;
+  loading?: boolean;
 }
 
-export const Select = ({
+const Select = ({
   options,
   displayNameField = 'id',
   label,
   onChange,
   selected,
+  loading = false,
 }: IProps) => {
   const [showOptions, setShowOptions] = useState(false);
 
@@ -29,6 +31,8 @@ export const Select = ({
         <p className="capitalize font-sans sm:text-sm md:text-md lg:text-lg text-gray">
           {selected
             ? selected[displayNameField].toLowerCase()
+            : loading
+            ? 'Loading...'
             : 'Click to choose'}
         </p>
 
@@ -48,3 +52,5 @@ export const Select = ({
     </div>
   );
 };
+
+export default Select;

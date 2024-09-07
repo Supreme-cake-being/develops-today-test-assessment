@@ -12,7 +12,6 @@ export const useFetch = (url: string) => {
       const response = await axios.get(
         process.env.NEXT_PUBLIC_API + `/${url}?format=json`
       );
-      console.log(response);
       setData(response.data);
     } catch (error) {
       const typedError = error as Error;
