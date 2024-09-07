@@ -5,7 +5,7 @@ interface IProps {
   displayNameField?: string;
   label: string;
   onChange: Dispatch<SetStateAction<any>>;
-  selected?: string | number;
+  selected?: Record<string, any>;
 }
 
 export const Select = ({
@@ -17,26 +17,29 @@ export const Select = ({
 }: IProps) => {
   const [showOptions, setShowOptions] = useState(false);
 
-  console.log(selected);
-
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col basis-3/6 gap-2">
       <p className="capitalize font-sans sm:text-sm md:text-md lg:text-lg">
         {label}
       </p>
 
       <div
-        className="relative sm:p-sm md:p-md lg:p-lg border rounded-2xl border-light-gray"
+        className="relative sm:p-sm md:p-md lg:p-lg border rounded-2xl border-gray"
         onClick={() => setShowOptions(!showOptions)}>
-        <p className="capitalize font-sans sm:text-sm md:text-md lg:text-lg text-light-gray">
-          {selected || 'Click to choose'}
+        <p className="capitalize font-sans sm:text-sm md:text-md lg:text-lg text-gray">
+          {selected
+            ? selected[displayNameField].toLowerCase()
+            : 'Click to choose'}
         </p>
 
         {showOptions && (
-          <div className="cursor-pointer absolute top-full left-0 z-50 w-full sm:p-sm md:p-md lg:p-lg bg-white border rounded-2xl border-light-gray">
+          <div className="cursor-pointer absolute top-full left-0 z-50 w-full sm:p-sm md:p-md lg:p-lg bg-white border rounded-2xl border-gray">
             {options?.map((option: Record<string, any>) => (
-              <div key={option.id} onClick={() => onChange(option.id)}>
-                {option[displayNameField]}
+              <div
+                key={option[displayNameField]}
+                className="cursor-pointer capitalize hover:bg-light-gray"
+                onClick={() => onChange(option)}>
+                {option[displayNameField].toLowerCase()}
               </div>
             ))}
           </div>

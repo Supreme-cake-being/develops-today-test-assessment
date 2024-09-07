@@ -28,7 +28,9 @@ module.exports = {
       },
       colors: {
         transparent: 'transparent',
-        'light-gray': '#6b7280',
+        blue: '#1d4ed8',
+        gray: '#6b7280',
+        'light-gray': '#f1f5f9',
       },
       padding: {
         sm: '8px 16px',
